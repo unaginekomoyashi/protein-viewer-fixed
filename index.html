@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>タンパク質構造ビューア</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>WebGLタンパク質構造ビューア</h1>
+        </header>
+        
+        <div class="main-content">
+            <div class="viewer-container">
+                <div id="protein-viewer"></div>
+                <div class="loading-overlay" id="loading-overlay">
+                    <div class="spinner"></div>
+                    <div class="loading-text">読み込み中...</div>
+                </div>
+            </div>
+            
+            <div class="control-panel">
+                <div class="file-controls">
+                    <h3>ファイル</h3>
+                    <div class="file-input-container">
+                        <input type="file" id="file-input" accept=".pdb,.mrc,.mtz,.map" multiple>
+                        <label for="file-input" class="file-input-label">ファイルを選択</label>
+                        <span id="file-name">ファイルが選択されていません</span>
+                    </div>
+                    <div id="loaded-files-list" class="loaded-files-list"></div>
+                </div>
+                
+                <div class="display-controls">
+                    <h3>表示モード</h3>
+                    <div class="control-group">
+                        <h4>タンパク質表示</h4>
+                        <div class="button-group">
+                            <button id="ribbon-mode" class="mode-button active">リボン</button>
+                            <button id="line-mode" class="mode-button">ライン</button>
+                            <button id="stick-mode" class="mode-button">スティック</button>
+                        </div>
+                        <div class="button-group">
+                            <button id="center-view" class="action-button">中心に配置</button>
+                        </div>
+                    </div>
+                    
+                    <div class="control-group">
+                        <h4>マップ表示</h4>
+                        <div class="button-group">
+                            <button id="mesh-mode" class="mode-button active">メッシュ</button>
+                            <button id="volume-mode" class="mode-button">ボリューム</button>
+                        </div>
+                        <div class="slider-container">
+                            <label for="contour-level">等値面レベル:</label>
+                            <input type="range" id="contour-level" min="0" max="10" step="0.1" value="1.0">
+                            <span id="contour-level-value">1.0</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="command-interface">
+                    <h3>コマンド (PyMOL文法)</h3>
+                    <div class="command-input-container">
+                        <input type="text" id="command-input" placeholder="コマンドを入力...">
+                        <button id="execute-command">実行</button>
+                    </div>
+                    <div id="command-output" class="command-output"></div>
+                    <div class="command-history-container">
+                        <h4>コマンド履歴</h4>
+                        <div id="command-history" class="command-history"></div>
+                    </div>
+                </div>
+                
+                <div class="info-panel">
+                    <h3>情報</h3>
+                    <div id="structure-info" class="structure-info">
+                        <p>構造情報がここに表示されます</p>
+                    </div>
+                    <div id="selection-info" class="selection-info">
+                        <p>選択情報がここに表示されます</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- ライブラリ -->
+    <script src="lib/three.min.js"></script>
+    <script src="lib/ngl.js"></script>
+    
+    <!-- アプリケーションスクリプト -->
+    <script src="js/parsers/pdb.js"></script>
+    <script src="js/parsers/mrc.js"></script>
+    <script src="js/parsers/mtz.js"></script>
+    <script src="js/parsers/map.js"></script>
+    <script src="js/utils/amino-acid.js"></script>
+    <script src="js/utils/file-loader.js"></script>
+    <script src="js/display-modes/protein-display.js"></script>
+    <script src="js/display-modes/map-display.js"></script>
+    <script src="js/command-parser.js"></script>
+    <script src="js/controls.js"></script>
+    <script src="js/renderer.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
